@@ -9,6 +9,8 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'simple_form'
 gem 'slim'
+gem 'highcharts-rails'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -16,4 +18,6 @@ end
 
 
 group :development do
+  gem 'pry'
+  gem 'pry-debugger'
 end

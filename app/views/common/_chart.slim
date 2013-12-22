@@ -1,0 +1,40 @@
+/ expects "function" as a local variable which is the PeriodicFunction object
+javascript:
+  $(function () {
+    var noAxis = {labels: {enabled: false}, title: {text: ''}}; 
+    $('##{function.id}').highcharts({
+      title: {
+        text: '#{function.class.name}',
+        useHTML: true          
+      },
+      subtitle: {
+        text: '&lambda;=#{function.display_wavelength} &fnof;=#{function.display_frequency}',
+        useHTML: true,
+      },
+      xAxis: noAxis,
+      yAxis: noAxis,
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        enabled: false,
+        formatter: function () {return '';}
+      },
+      series: [
+        {
+          color: '##{function.color || 'fc2'}',
+          data: #{function.data.to_json}
+        }
+      ],
+      credits: { enabled: false },
+      plotOptions: {
+        series: {
+          marker: {
+            fillColor: 'none',
+            lineColor: null
+          }
+        }
+      }
+
+    });
+  });
