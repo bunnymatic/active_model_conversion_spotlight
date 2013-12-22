@@ -1,10 +1,41 @@
+body {
+  font-family: helvetica;
+  background-color:#fafafa;
+}
+
 .widget {
   width: 28%;
   float: left;
   margin: 1%;
   padding: 1%;
+  border:1px solid #ccc;
+  background-color: #fff;
+  header {
+    h1 {
+      font-size: 120%;
+      text-align: center;
+      margin: 5px auto 10px;
+    }
+  }
+  .square {
+    header {
+      color: blue;
+    }
+  }
+  .sine {
+    header {
+      color: purple;
+    }
+  }
+  .random {
+    header {
+      color: #229;
+    }
+  }
+  .triangle {
+    header {
+      color: #f29;
+    }
+  }
 }
-.square {
-}
-.sine {
-}
+

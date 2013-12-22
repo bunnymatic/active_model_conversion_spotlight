@@ -1,21 +1,24 @@
 class PeriodicFunction
 
-  attr_reader :created_at, :color, :wavelength, :frequency
-  
-  DEFAULTS = { 
-    frequency: 2,
-    length: 128,
-    amplitude: 1
-  }
-  
-  def initialize(params = {})
-    opts = DEFAULTS.merge(params)
-    @color = opts[:color]
-    @length = opts[:length].to_i
-    @amplitude = opts[:amplitude].to_f
-    @frequency = opts[:frequency].to_f
-    @wavelength = @length/@frequency
+  include ActiveModel::Model
+  include ActiveModel::Conversion
+
+  validates :frequency, :numericality => true
+  validates :length, :numericality => true
+
+  attr_accessor :created_at, :color, :frequency, :amplitude, :length
+
+  def initialize(*args)
+    super
+    @color ||= '#fc2'
+    @length ||= 128
+    @frequency ||= 2
+    @amplitude ||= 1
     @created_at = Time.zone.now
+  end
+
+  def wavelength
+    length/frequency
   end
 
   def display_wavelength
@@ -32,7 +35,7 @@ class PeriodicFunction
 
   def data
     raise "You must define a generator for the derived class" unless respond_to? :generator
-    @length.times.map{|x| generator(x)}
+    length.times.map{|x| generator(x)}
   end
 
 end

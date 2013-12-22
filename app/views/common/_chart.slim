@@ -1,11 +1,12 @@
 / expects "function" as a local variable which is the PeriodicFunction object
+.chart id=function.id
+
 javascript:
   $(function () {
     var noAxis = {labels: {enabled: false}, title: {text: ''}}; 
     $('##{function.id}').highcharts({
       title: {
-        text: '#{function.class.name}',
-        useHTML: true          
+        text: null
       },
       subtitle: {
         text: '&lambda;=#{function.display_wavelength} &fnof;=#{function.display_frequency}',

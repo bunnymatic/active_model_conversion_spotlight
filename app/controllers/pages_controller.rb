@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-  FUNCTIONS = [SineWave, SquareWave, TriangleWave].freeze
+  FUNCTIONS = [SineWave, SquareWave, TriangleWave, RandomFunction].freeze
 
   def index
     opts = process_params
