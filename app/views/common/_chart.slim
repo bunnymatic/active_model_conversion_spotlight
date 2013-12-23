@@ -3,7 +3,15 @@
 
 javascript:
   $(function () {
-    var noAxis = {labels: {enabled: false}, title: {text: ''}}; 
+    var noAxis = {
+      gridLineWidth: 0, 
+      minorGridLineWidth: 0, 
+      lineColor: 'transparent',
+      minorTickLength: 0,
+      tickLength: 0,
+      labels: {enabled: false}, 
+      title: {text: ''}
+    }; 
     $('##{function.id}').highcharts({
       title: {
         text: null
@@ -13,7 +21,7 @@ javascript:
         useHTML: true,
       },
       xAxis: noAxis,
-      yAxis: noAxis,
+      yAxis: $.extend({min: #{function.min}, max:#{function.max}}, noAxis),
       legend: {
         enabled: false
       },

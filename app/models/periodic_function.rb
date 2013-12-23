@@ -38,4 +38,12 @@ class PeriodicFunction
     length.times.map{|x| generator(x)}
   end
 
+  def max
+    amplitude
+  end
+
+  def min
+    -amplitude
+  end
+
 end

@@ -11,6 +11,15 @@ class RandomFunction < PeriodicFunction
   end
 
   def generator(x)
-    [x,@amplitude * rand]
+    [x, amplitude * rand]
   end
+
+  def max
+    amplitude
+  end
+
+  def min
+    0.0
+  end
+
 end
