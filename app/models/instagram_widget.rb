@@ -10,7 +10,7 @@ class InstagramWidget
   end
   
   def instagram
-    @@instagram ||= InstagramFeed.new(:tag => @tag)
+    @@instagram ||= InstagramFeed.new(:tag => @tag || 'c5scavenger')
   end
   
 end

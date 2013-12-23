@@ -1,5 +1,9 @@
 class PeriodicFunction
 
+  COLORS =["A69700",	"00F273",
+           "6c006c",	"D25FD2",
+           "090974",	"7373D9"].freeze
+
   include ActiveModel::Model
   include ActiveModel::Conversion
 
@@ -10,9 +14,8 @@ class PeriodicFunction
 
   def initialize(*args)
     super
-    @color ||= '#fc2'
     @length ||= 128
-    @frequency ||= 2
+    @frequency ||= 1+rand(8)
     @amplitude ||= 1
     @created_at = Time.zone.now
   end
@@ -44,6 +47,10 @@ class PeriodicFunction
 
   def min
     -amplitude
+  end
+
+  def color
+    @color ||= COLORS.sample
   end
 
 end
