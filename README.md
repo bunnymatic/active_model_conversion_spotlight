@@ -1,8 +1,23 @@
-# widgets and `ActiveModel::Conversion`
+# tl;dr
 
-You can easily build widget like classes which know how to find their own view by leveraging ActiveModel::Conversion
+Easily build renderable ruby classes for Rails using `ActiveModel::Conversion`.
 
-This came up on a recent project where the home page was going to be a handful of html blocks which showed some over all system status.  Without using widgets, we might have done something like this:
+Given a model named `SuperWidget`
+and a corresponding partial in `app/super_widget/_super_widget.html.slim`
+set it up in a controller:
+
+    @widget = SuperWidget.new
+
+and render it in the view
+
+    render @widget
+
+
+# Using `ActiveModel::Conversion` to build widgets
+
+## the problem
+
+In a recent project, we had several little status/info blocks that we wanted to render on a page.  Each block required a different combination of data.  In the controller, as we started writing code to fetch all the right data and put it together, we quickly realized that thing were going to get ugly.  We started with something like this:
 
 ```
 # controllers/pages_controller.rb#welcome
@@ -34,56 +49,78 @@ end
   ... etc ...
 ```
 
-However, if these objects (`HotStuff`, `RecentActivity`, etc) knew how to render themselves, we could make this a bit simpler.  On the view side, we could do:
+You can see that as we added more items to put on the page, both the controller and view got bigger and more complex.
+
+What we wanted was two-fold:
+
+1. Presenters that would be used to combine the data in the right way for each block
+1. An easy way to render those presenter objects
+
+Let's start with the presenters.  Using the example above, we could write two simple wrappers to manage packaging the data nicely.
 
 ```
-.main
-  - @homepage_blocks.each do |block|
-    section.block
-      == render block
-```
-
-To get this to work, we need to leverage `ActiveModel::Conversion`.  This module adds the following methods: `#to_model`, `#to_key`, `#to_param`, and `#to_partial_path`.  These methods are used by `render` if you hand it an `Object` (as opposed to a `Symbol` or `String`.  Passing an `Object` to `render` will simply look up a partial path (using to_partial_paht) which looks like `<model_names>/_<model_name>.<format>` and pass the object to the partial in a variable called `<model_name>`.
-
-Let's make this concrete.  Given the examples above, we could build a container which knows how to render itself.  Then we'll grab those widgets in the controller.  Let's start with `Stuff.hot`.
-
-```
-# in widgets/hot_stuff.rb
-# the hot stuff wrapper
+# the hot stuff wrapper/presenter
 class HotStuff
-
-  include ActiveModel::Conversion
 
   def items
     @items ||= Stuff.hot.limit(5)
   end
+
 end
 ```
 
 And for recent activity, we could do
 
 ```
-# in widgets/recent_activity.rb
 # the recent activity wrapper
 class RecentActivity
 
-  include ActiveModel::Conversion
   def items
     @items ||= Activity.recent.limit(5)
   end
+
 end
 
 ```
 
-Now we replace the controller logic
-```
-# in controllers/pages_controller.rb
+Then we can simplify the controller method a bit.
+
+```   
   def welcome
-    @homepage_blocks = [HotStuff.new, RecentActivity.new]
+    @hot_stuff = HotStuff.new
+    @recent_activity = RecentActivity.new
   end
 ```
 
-The only thing left is to define partials for the widgets.  
+This solves the first issue, but it has not simplified the view.  This is where `ActiveModel::Conversion` comes in.
+By mixing `ActiveModel::Conversion` into our wrapper classes, the classes suddenly know how to render themselves.
+
+In both classes, we add:
+
+```
+  include ActiveModel::Conversion
+```
+
+This adds the following methods: `#to_model`, `#to_key`, `#to_param`, and `#to_partial_path` to our classes.  These methods are used by `ActionController::Base#render`.  If `render` receives an `Object` (as opposed to a `Symbol` or `String`, it makes a call that looks like:
+
+```              
+    render '<model names>/<model name>`, :<model name> => object
+```
+
+where it gets the first argument using `to_partial_path`.
+
+Now that we've added the mixin, we can update the view:
+
+```
+/ app/pages/index.html.slim
+.main
+  section.block
+    == render @hot_stuff
+  section.block
+    == render @recent_activity
+```
+
+And to finish it up, we need to add partials for the two wrapper classes.
 ```
 / in app/views/hot_stuffs/_hot_stuff.slim
 h1 Hot Stuff has #{hot_stuff.items.count} things
@@ -93,7 +130,25 @@ h1 Hot Stuff has #{hot_stuff.items.count} things
 h1 There are #{recent_activity.items.count} recent bits of activity
 ```
 
-That's it.  At this point, the home page should have 2 blocks, one showing the `_hot_stuff.slim` partial and the other showing the `_recent_activity.slim` partial.  I've constructed these partials to be pretty dumb, but you can imagine fleshing out the wrapper classes (not unlike building presenters) and adding to the partial to show what you need.
+Now that we've got this far, we can do one more refactor:
+```
+  # app/controllers/pages_controller.rb
+  def welcome
+    @homepage_blocks = [HotStuff.new, RecentActivity.new]
+  end
+```
+```
+/ app/pages/index.html.slim
+.main
+  section.block
+    - @homepage_blocks.each do |block|
+      == render block
+```
+
+That's it.  At this point, the home page will render the two blocks, one showing hot stuff, and one showing recent activity.  The partials are (for this example) pretty dumb, but you can imagine fleshing them out to pull from other methods you might put in the wrappers (which are not unlike presenters).
+
+
+## Sample App
 
 The sample app here includes the following widgets:
 
@@ -106,19 +161,26 @@ The sample app here includes the following widgets:
 
 If you look through the code, you can see how things were built, but the first four include Javascript required to get the graphs drawn.  The partial for the model handles that bit.  And the other widgets are wrappers on a thin feed puller and draw the first few (or random) entries from their respective feeds.  The controller, in this case, simply chooses a random array of these widgets and renders them.  Each page refresh, you get a new set of widgets.
 
+# references
+
+* [ActiveModel::Conversion](http://api.rubyonrails.org/classes/ActiveModel/Conversion.html)
+* [Rails render](http://guides.rubyonrails.org/layouts_and_rendering.html#using-render)
+
 # develop
 
 * clone it
 ```
-    git clone https://
+    git clone https://github.com/bunnymatic/active_model_conversion_spotlight.git
 ```
 * bundle it
 ```
+    cd active_model_conversion_spotlight
     bundle
 ```
 * crank it
 ```
     bundle exec rails s
 ```
-* hit it - point your browser to http://localhost:3000
+* hit it 
+    open http://localhost:3000
 
