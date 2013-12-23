@@ -10,7 +10,7 @@ To make a ruby class named `SuperWidget` renderable in Rails
 ```
     @widget = SuperWidget.new
 ```
-* render it in the view
+* render it in a view
 ```
     render @widget
 ```
@@ -66,11 +66,9 @@ The first step is to build some presenters.  Using the example above, we could w
 ```
 # the hot stuff wrapper/presenter
 class HotStuff
-
   def items
     @items ||= Stuff.hot.limit(5)
   end
-
 end
 ```
 
@@ -79,11 +77,9 @@ And for recent activity, we could do
 ```
 # the recent activity wrapper
 class RecentActivity
-
   def items
     @items ||= Activity.recent.limit(5)
   end
-
 end
 
 ```
@@ -99,7 +95,7 @@ Then we can simplify the controller method a bit.
 
 This solves the first issue, but it has not simplified the view.  This is where `ActiveModel::Conversion` comes in.
 
-### train your models to render
+### renderable classes
 
 By mixing `ActiveModel::Conversion` into our wrapper classes, the classes suddenly know how to render themselves.
 
@@ -119,7 +115,7 @@ is effectively doing this:
 ```              
     render @object.to_partial_path, :<model name> => @object
 ```
-And `to_partial_path` generates a path that looks like '<model names>/<model name>'
+And `to_partial_path` generates a path that looks like `<model names>/<model name>`
 
 Now that we've added the mixin, we can update the view:
 
@@ -187,18 +183,25 @@ If you look through the code, you can see how things were built, but the first f
 # develop
 
 * clone it
+
 ```
     git clone https://github.com/bunnymatic/active_model_conversion_spotlight.git
 ```
+
 * bundle it
+
 ```
     cd active_model_conversion_spotlight
     bundle
 ```
+
 * crank it
+
 ```
     bundle exec rails s
 ```
+
 * hit it 
+
     open http://localhost:3000
 
