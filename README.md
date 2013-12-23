@@ -2,9 +2,9 @@
 
 Easily build renderable ruby classes for Rails using `ActiveModel::Conversion`.
 
-Given a model named `SuperWidget`
-and a corresponding partial in `app/super_widget/_super_widget.html.slim`
-set it up in a controller:
+Given a model named `SuperWidget` and a corresponding partial in `app/super_widgets/_super_widget.html.slim`
+
+Set it up in a controller:
 
     @widget = SuperWidget.new
 
@@ -56,7 +56,11 @@ What we wanted was two-fold:
 1. Presenters that would be used to combine the data in the right way for each block
 1. An easy way to render those presenter objects
 
-Let's start with the presenters.  Using the example above, we could write two simple wrappers to manage packaging the data nicely.
+## the solution
+
+### presenters
+
+The first step is to build some presenters.  Using the example above, we could write two simple wrappers to manage packaging the data nicely.
 
 ```
 # the hot stuff wrapper/presenter
@@ -93,6 +97,9 @@ Then we can simplify the controller method a bit.
 ```
 
 This solves the first issue, but it has not simplified the view.  This is where `ActiveModel::Conversion` comes in.
+
+### train your models to render
+
 By mixing `ActiveModel::Conversion` into our wrapper classes, the classes suddenly know how to render themselves.
 
 In both classes, we add:
