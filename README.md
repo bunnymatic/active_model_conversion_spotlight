@@ -8,7 +8,6 @@ This came up on a recent project where the home page was going to be a handful o
 # controllers/pages_controller.rb#welcome
 
 class PagesController < ApplicationController
-
   ...
 
   def welcome
@@ -20,8 +19,7 @@ class PagesController < ApplicationController
 end
 ```
 ```
-# views/pages/index.slim
-
+/ views/pages/index.slim
 .main
   section.block
     h1 this is hot
@@ -51,7 +49,7 @@ Let's make this concrete.  Given the examples above, we could build a container 
 
 ```
 # in widgets/hot_stuff.rb
-# the hot stuff presenter
+# the hot stuff wrapper
 class HotStuff
 
   include ActiveModel::Conversion
@@ -65,8 +63,8 @@ end
 And for recent activity, we could do
 
 ```
-# in widgets/hot_stuff.rb
-# the hot stuff presenter
+# in widgets/recent_activity.rb
+# the recent activity wrapper
 class RecentActivity
 
   include ActiveModel::Conversion
