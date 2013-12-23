@@ -1,7 +1,13 @@
 class PagesController < ApplicationController
 
 
-  WIDGETS = [SineWave, SquareWave, TriangleWave, RandomFunction, InstagramWidget].freeze
+  WIDGETS = [
+    SineWave, 
+    SquareWave, 
+    TriangleWave, 
+    RandomFunction, 
+    GithubWidget,
+    InstagramWidget].freeze
 
   INSTA_TAG = 'c5scavenger'
 

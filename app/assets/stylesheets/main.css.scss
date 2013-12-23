@@ -10,6 +10,28 @@ body {
   padding: 1%;
   border:1px solid #ccc;
   background-color: #fff;
+  .github {
+    height: 432px;
+    .activity {
+      font-size: 85%;
+      margin-left: 0;
+      padding-left: 1em;
+      text-indent: -1em;
+      list-style: none;
+      li {
+        line-height: 1.4em;
+      }
+      .user { 
+        font-style: italic;
+        color: #9999ff;
+      }
+      .repo { 
+        font-family: Courier;
+        color: #444444;
+      }
+
+    }
+  }
   .img {
     max-width: 90%;
     height: 400px;

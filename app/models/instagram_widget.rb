@@ -1,16 +1,17 @@
 class InstagramWidget
 
-  include ActiveModel::Model
   include ActiveModel::Conversion
-
-  attr_accessor :tag
+  
+  def tag
+    'c5scavenger'
+  end
 
   def image
     instagram.image
   end
   
   def instagram
-    @@instagram ||= InstagramFeed.new(:tag => @tag || 'c5scavenger')
+    @@instagram ||= InstagramFeed.new(:tag => tag)
   end
   
 end

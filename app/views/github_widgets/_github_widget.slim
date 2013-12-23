@@ -1,0 +1,7 @@
+.github
+  header
+    h1 github #{github_widget.user}
+  .blog
+    ul.activity
+      - github_widget.activity.each do |activity|
+        li == activity
