@@ -2,18 +2,20 @@
 
 Easily build renderable ruby classes for Rails using `ActiveModel::Conversion`.
 
-Given a model named `SuperWidget` and a corresponding partial in `app/super_widgets/_super_widget.html.slim`
+To make a ruby class named `SuperWidget` renderable in Rails
 
-Set it up in a controller:
-
+* add `include ActiveModel::Conversion` to the class
+* add a corresponding partial in `app/super_widgets/_super_widget.html.slim`
+* set it up in a controller
+```
     @widget = SuperWidget.new
-
-and render it in the view
-
+```
+* render it in the view
+```
     render @widget
+```
 
-
-# Using `ActiveModel::Conversion` to build widgets
+# use `ActiveModel::Conversion` to build widgets
 
 ## the problem
 
