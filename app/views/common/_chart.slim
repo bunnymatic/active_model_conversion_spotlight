@@ -21,7 +21,7 @@ javascript:
         useHTML: true,
       },
       xAxis: noAxis,
-      yAxis: $.extend({min: #{function.min}, max:#{function.max}}, noAxis),
+      yAxis: $.extend({min: (1.01*#{function.min}), max:(1.01*#{function.max})}, noAxis),
       legend: {
         enabled: false
       },

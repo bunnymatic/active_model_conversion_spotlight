@@ -21,6 +21,7 @@ body {
     }
   }
   header {
+    position: relative;
     h1 {
       font-size: 120%;
       text-align: center;
@@ -49,3 +50,15 @@ body {
   }
 }
 
+.layoutless {
+  position: absolute;
+  right: 0;
+  top:0;
+  z-index: 1;
+  text-decoration: none;
+  font-weight: bold;
+  display: none;
+  #main & {
+    display: block;
+  }
+}

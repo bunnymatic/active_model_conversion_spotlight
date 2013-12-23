@@ -9,7 +9,7 @@ class PagesController < ApplicationController
 
   def index
     opts = process_params
-    nwidgets = [1, [opts[:n].to_i, 20].min].max
+    nwidgets = [[opts[:n].to_i || 6, 18].min, 1].max
     @widgets = nwidgets.times.map do |n|
       construct_widget(WIDGETS.sample, n)
     end
