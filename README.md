@@ -20,8 +20,7 @@ and render it in the view
 In a recent project, we had several little status/info blocks that we wanted to render on a page.  Each block required a different combination of data.  In the controller, as we started writing code to fetch all the right data and put it together, we quickly realized that thing were going to get ugly.  We started with something like this:
 
 ```
-# controllers/pages_controller.rb#welcome
-
+# in app/controllers/pages_controller.rb
 class PagesController < ApplicationController
   ...
 
@@ -34,7 +33,7 @@ class PagesController < ApplicationController
 end
 ```
 ```
-/ views/pages/index.slim
+/ in app/views/pages/index.slim
 .main
   section.block
     h1 this is hot
@@ -108,13 +107,17 @@ In both classes, we add:
   include ActiveModel::Conversion
 ```
 
-This adds the following methods: `#to_model`, `#to_key`, `#to_param`, and `#to_partial_path` to our classes.  These methods are used by `ActionController::Base#render`.  If `render` receives an `Object` (as opposed to a `Symbol` or `String`, it makes a call that looks like:
+This adds the following methods: `#to_model`, `#to_key`, `#to_param`, and `#to_partial_path` to our classes.  These methods are used by `ActionController::Base#render`.  Rendering an object like:
+
+```
+   render @object
+```
+is effectively doing this:
 
 ```              
-    render '<model names>/<model name>`, :<model name> => object
+    render @object.to_partial_path, :<model name> => @object
 ```
-
-where it gets the first argument using `to_partial_path`.
+And `to_partial_path` generates a path that looks like '<model names>/<model name>'
 
 Now that we've added the mixin, we can update the view:
 
@@ -127,14 +130,20 @@ Now that we've added the mixin, we can update the view:
     == render @recent_activity
 ```
 
-And to finish it up, we need to add partials for the two wrapper classes.
+And to finish it up, we need to add partials (whose patch is going to match `to_partial_path`'s response) for the two wrapper classes.
 ```
 / in app/views/hot_stuffs/_hot_stuff.slim
-h1 Hot Stuff has #{hot_stuff.items.count} things
+h1 this is hot
+ul.hot_stuff  
+  - @hot_stuff.items.each do |hot|
+    li = hot.snippet
 ```
 ```
 / in app/views/recent_activities/_recent_activity.slim
-h1 There are #{recent_activity.items.count} recent bits of activity
+h1 this is recent
+ul.recent_activity
+  - @recent_activity.each do |recent|
+    li = recent.snippet
 ```
 
 Now that we've got this far, we can do one more refactor:
