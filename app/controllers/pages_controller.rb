@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   end
 
   def instagram_widget
-    render InstagramWidget.new :tag => INSTA_TAG
+    render InstagramWidget.new
   end
 
   def process_params
