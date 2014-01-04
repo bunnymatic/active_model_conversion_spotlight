@@ -198,6 +198,7 @@ If you look through the code, you can see how things were built, but the first f
 * crank it
 
 ```
+    bundle exec rake db:create # active record likes a database even tho we don't really use it here
     bundle exec rails s
 ```
 

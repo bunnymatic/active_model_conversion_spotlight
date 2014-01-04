@@ -1,15 +1,38 @@
 body {
   font-family: helvetica;
   background-color:#fafafa;
+  margin-top: 50px;
 }
 
+
+header#main {
+  position:fixed;
+  height: 40px;
+  line-height:40px;
+  text-align: center;
+  margin: auto;
+  background-color: rgba(140,140,140,0.4);
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  text-transform: lowercase;
+  letter-spacing: -1px;
+  a {
+    text-decoration: none;
+  }
+}  
+  
+
 .widget {
+  z-index: 0;
   width: 28%;
   float: left;
   margin: 1%;
   padding: 1%;
   border:1px solid #ccc;
   background-color: #fff;
+  overflow: hidden;
   .github {
     height: 432px;
     .activity {
