@@ -206,3 +206,6 @@ If you look through the code, you can see how things were built, but the first f
 
     open http://localhost:3000
 
+# credits
+
+Thanks for the help, discussion and pairing from [Ken](https://github.com/viceversus) and [Jason](https://github.com/subakva)
