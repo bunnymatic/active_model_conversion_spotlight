@@ -1,6 +1,8 @@
 = link_to root_path do
   header#main
     | refresh
+    .forkit 
+      =link_to 'fork it', 'https://github.com/bunnymatic/active_model_conversion_spotlight'
 
 #main
   - @widgets.each do |widget|
