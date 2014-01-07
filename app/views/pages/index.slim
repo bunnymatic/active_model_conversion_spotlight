@@ -1,8 +1,9 @@
-= link_to root_path do
+=link_to 'https://github.com/bunnymatic/active_model_conversion_spotlight' do
+  img style="position: fixed; z-index:10; top: 0; left: 0; border: 0;" src="assets/fork_me_on_github.png" alt="Fork me on GitHub"
+= link_to root_path, :title => 'refresh' do
   header#main
-    | refresh
-    .forkit 
-      =link_to 'fork it', 'https://github.com/bunnymatic/active_model_conversion_spotlight'
+    .refresh
+      img src="assets/refresh.png"
 
 #main
   - @widgets.each do |widget|
