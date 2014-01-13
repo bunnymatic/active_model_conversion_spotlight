@@ -2,7 +2,7 @@
   img style="position: fixed; z-index:10; top: 0; left: 0; border: 0;" src=image_path("fork_me_on_github.png") alt="Fork me on GitHub"
 = link_to root_path, :title => 'refresh' do
   header#main
-    .refresh
+    .refresh.tooltip title="get a new set of widgets"
       img src=image_path("refresh.png")
 
 #main
