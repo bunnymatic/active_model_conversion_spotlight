@@ -20,7 +20,7 @@ class GithubFeed
   end
 
   def feed_url
-    raise InstagramFeedError.new(errors.full_messages) unless valid?
+    raise GithubFeedError.new(errors.full_messages) unless valid?
     "https://github.com/#{@user}.atom"
   end
 end
