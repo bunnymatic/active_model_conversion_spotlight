@@ -16,7 +16,7 @@ class GithubFeed
   private 
 
   def fetch
-    Feedzirra::Feed.fetch_and_parse feed_url
+    Feedjira::Feed.fetch_and_parse feed_url
   end
 
   def feed_url

@@ -11,7 +11,8 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem 'slim'
 gem 'highcharts-rails'
-gem 'feedzirra'
+gem 'feedjira'
+gem 'better_errors'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

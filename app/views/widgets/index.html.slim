@@ -1,0 +1,11 @@
+=link_to 'https://github.com/bunnymatic/active_model_conversion_spotlight' do
+  img style="position: fixed; z-index:10; top: 0; left: 0; border: 0;" src=image_path("fork_me_on_github.png") alt="Fork me on GitHub"
+= link_to ".", :title => 'refresh' do
+  header#main
+    .refresh.tooltip title="get a new set of widgets"
+      img src=image_path("refresh.png")
+
+#main
+  - @ajax_urls.each do |url|
+    .widget
+      = render "ajax_widget", :url => url

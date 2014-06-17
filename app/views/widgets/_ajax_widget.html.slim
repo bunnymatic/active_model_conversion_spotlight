@@ -1,0 +1,5 @@
+/ locals :url
+- widget_id = "w" + rand(36**8).to_s(36)
+.w(id=widget_id)
+javascript:
+  $(function() { $('##{widget_id}').load('#{url}'); });
